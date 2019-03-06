@@ -12,6 +12,7 @@
 		7DA49DCF222F8679002A3980 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7DA49DCD222F8679002A3980 /* Main.storyboard */; };
 		7DA49DD1222F867C002A3980 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7DA49DD0222F867C002A3980 /* Assets.xcassets */; };
 		7DA49DD4222F867C002A3980 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7DA49DD2222F867C002A3980 /* LaunchScreen.storyboard */; };
+		A78E9DC4C5B1384FD67D2429 /* Pods_PsychiatryChat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C4864D4E18A07D034AC3417 /* Pods_PsychiatryChat.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,9 @@
 		7DA49DD0222F867C002A3980 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7DA49DD3222F867C002A3980 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7DA49DD5222F867C002A3980 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		92B2DD2E561C9CF0B687B765 /* Pods-PsychiatryChat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PsychiatryChat.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PsychiatryChat/Pods-PsychiatryChat.debug.xcconfig"; sourceTree = "<group>"; };
+		9C4864D4E18A07D034AC3417 /* Pods_PsychiatryChat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PsychiatryChat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BD09FC5F02CDCF56B43CCD27 /* Pods-PsychiatryChat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PsychiatryChat.release.xcconfig"; path = "Pods/Target Support Files/Pods-PsychiatryChat/Pods-PsychiatryChat.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,17 +33,29 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A78E9DC4C5B1384FD67D2429 /* Pods_PsychiatryChat.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		65B5311FF34F5A74CFD300A9 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				92B2DD2E561C9CF0B687B765 /* Pods-PsychiatryChat.debug.xcconfig */,
+				BD09FC5F02CDCF56B43CCD27 /* Pods-PsychiatryChat.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		7DA49DBD222F8679002A3980 = {
 			isa = PBXGroup;
 			children = (
 				7DA49DC8222F8679002A3980 /* PsychiatryChat */,
 				7DA49DC7222F8679002A3980 /* Products */,
+				65B5311FF34F5A74CFD300A9 /* Pods */,
+				C621A4D65E66A9C53F9EDDA0 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -64,6 +80,14 @@
 			path = PsychiatryChat;
 			sourceTree = "<group>";
 		};
+		C621A4D65E66A9C53F9EDDA0 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				9C4864D4E18A07D034AC3417 /* Pods_PsychiatryChat.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -71,6 +95,8 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 7DA49DD8222F867C002A3980 /* Build configuration list for PBXNativeTarget "PsychiatryChat" */;
 			buildPhases = (
+				7DA49DDB222F9B0B002A3980 /* ShellScript */,
+				1FECE89B375D4114D12E9B45 /* [CP] Check Pods Manifest.lock */,
 				7DA49DC2222F8679002A3980 /* Sources */,
 				7DA49DC3222F8679002A3980 /* Frameworks */,
 				7DA49DC4222F8679002A3980 /* Resources */,
@@ -129,6 +155,48 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		1FECE89B375D4114D12E9B45 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-PsychiatryChat-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		7DA49DDB222F9B0B002A3980 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		7DA49DC2222F8679002A3980 /* Sources */ = {
@@ -280,11 +348,13 @@
 		};
 		7DA49DD9222F867C002A3980 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 92B2DD2E561C9CF0B687B765 /* Pods-PsychiatryChat.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = WG57F49J5K;
 				INFOPLIST_FILE = PsychiatryChat/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -292,17 +362,19 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.ameyo.PsychiatryChat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
 		7DA49DDA222F867C002A3980 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = BD09FC5F02CDCF56B43CCD27 /* Pods-PsychiatryChat.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = WG57F49J5K;
 				INFOPLIST_FILE = PsychiatryChat/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -310,7 +382,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.ameyo.PsychiatryChat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
