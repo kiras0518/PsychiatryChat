@@ -7,4 +7,6 @@ target 'PsychiatryChat' do
 
   # Pods for PsychiatryChat
     pod 'SwiftLint'
+    pod 'Firebase/Core'
+    pod 'Firebase/Auth'
 end

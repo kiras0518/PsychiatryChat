@@ -12,6 +12,7 @@
 		7DA49DCF222F8679002A3980 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7DA49DCD222F8679002A3980 /* Main.storyboard */; };
 		7DA49DD1222F867C002A3980 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7DA49DD0222F867C002A3980 /* Assets.xcassets */; };
 		7DA49DD4222F867C002A3980 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7DA49DD2222F867C002A3980 /* LaunchScreen.storyboard */; };
+		7DA49DDD222FB22C002A3980 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7DA49DDC222FB22C002A3980 /* GoogleService-Info.plist */; };
 		A78E9DC4C5B1384FD67D2429 /* Pods_PsychiatryChat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C4864D4E18A07D034AC3417 /* Pods_PsychiatryChat.framework */; };
 /* End PBXBuildFile section */
 
@@ -23,6 +24,7 @@
 		7DA49DD0222F867C002A3980 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7DA49DD3222F867C002A3980 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7DA49DD5222F867C002A3980 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7DA49DDC222FB22C002A3980 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		92B2DD2E561C9CF0B687B765 /* Pods-PsychiatryChat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PsychiatryChat.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PsychiatryChat/Pods-PsychiatryChat.debug.xcconfig"; sourceTree = "<group>"; };
 		9C4864D4E18A07D034AC3417 /* Pods_PsychiatryChat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PsychiatryChat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BD09FC5F02CDCF56B43CCD27 /* Pods-PsychiatryChat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PsychiatryChat.release.xcconfig"; path = "Pods/Target Support Files/Pods-PsychiatryChat/Pods-PsychiatryChat.release.xcconfig"; sourceTree = "<group>"; };
@@ -76,6 +78,7 @@
 				7DA49DD0222F867C002A3980 /* Assets.xcassets */,
 				7DA49DD2222F867C002A3980 /* LaunchScreen.storyboard */,
 				7DA49DD5222F867C002A3980 /* Info.plist */,
+				7DA49DDC222FB22C002A3980 /* GoogleService-Info.plist */,
 			);
 			path = PsychiatryChat;
 			sourceTree = "<group>";
@@ -95,11 +98,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 7DA49DD8222F867C002A3980 /* Build configuration list for PBXNativeTarget "PsychiatryChat" */;
 			buildPhases = (
-				7DA49DDB222F9B0B002A3980 /* ShellScript */,
 				1FECE89B375D4114D12E9B45 /* [CP] Check Pods Manifest.lock */,
+				7DA49DDB222F9B0B002A3980 /* ShellScript */,
 				7DA49DC2222F8679002A3980 /* Sources */,
 				7DA49DC3222F8679002A3980 /* Frameworks */,
 				7DA49DC4222F8679002A3980 /* Resources */,
+				F79CF4DD8C1B5EBE46A05B63 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -149,6 +153,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7DA49DD4222F867C002A3980 /* LaunchScreen.storyboard in Resources */,
+				7DA49DDD222FB22C002A3980 /* GoogleService-Info.plist in Resources */,
 				7DA49DD1222F867C002A3980 /* Assets.xcassets in Resources */,
 				7DA49DCF222F8679002A3980 /* Main.storyboard in Resources */,
 			);
@@ -195,6 +200,32 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
+		};
+		F79CF4DD8C1B5EBE46A05B63 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-PsychiatryChat/Pods-PsychiatryChat-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PsychiatryChat/Pods-PsychiatryChat-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
