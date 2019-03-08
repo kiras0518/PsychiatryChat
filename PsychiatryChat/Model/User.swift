@@ -9,15 +9,13 @@
 import Foundation
 import UIKit
 import Firebase
+import FirebaseDatabase
 
 struct User {
-    
-    //Properties
     let name: String
     let email: String
     let id: String
     var profilePic: UIImage
-    
     init(name: String, email: String, id: String, profilePic: UIImage) {
         self.name = name
         self.email = email
