@@ -14,8 +14,8 @@ class ChatTableViewController: UIViewController, UITableViewDelegate, UITableVie
     @IBOutlet weak var inputTextField: UITextField!
     @IBOutlet weak var tableView: UITableView!
     var messageArray: [Message] = []
-    
-    //var chatMessage: User?
+    //var selectedChatRoom: ChatRoom?
+    var toChatID =  [String]()
     var toUser: User?
     @IBAction func sendMessage(_ sender: Any) {
         if let text = self.inputTextField.text {
@@ -25,7 +25,6 @@ class ChatTableViewController: UIViewController, UITableViewDelegate, UITableVie
             }
         }
     }
-   
 //    func exitButton() {
 //        print("EXIRRRRRR")
 //        let back = UIButton(type: .system)
@@ -45,7 +44,8 @@ class ChatTableViewController: UIViewController, UITableViewDelegate, UITableVie
         self.tableView.delegate = self
         self.tableView.dataSource = self
         getConversations()
-        print("11111111111")
+        getChat()
+        
         //exitButton()
 //        let seRef = Database.database().reference().child("conversations")
 //        seRef.observeSingleEvent(of: .value, with: { snapshot in
@@ -105,14 +105,15 @@ class ChatTableViewController: UIViewController, UITableViewDelegate, UITableVie
 
     }
     */
+    var selectChat: ConversationID?
     
     //根參考點
     let rootReference = Database.database().reference()
     func composeMessage() {
         if let currentUserID = Auth.auth().currentUser?.uid {
-            let messagesRef = rootReference.child("conversations")
             //創建訊息Ref
-            //guard let selectedChatRoomID = self.selectedChatRoom?.autoID else { return }
+            guard let selectChatID = self.selectChat?.autoID else { return }
+            let messagesRef: DatabaseReference = rootReference.child("conversations")
             let singleMessageAutoRef = messagesRef.childByAutoId()
             let singleMessageRef = singleMessageAutoRef.child("messages").childByAutoId()
             //print("按下送出\(singleMessageAutoRef.key)")
@@ -122,6 +123,29 @@ class ChatTableViewController: UIViewController, UITableViewDelegate, UITableVie
             singleMessageRef.updateChildValues(postMessage)
         }
     }
+//    func selectConversations() {
+//        //let chatroomID = Database.database().reference().child("Chat_ID")
+//        // 1. ChatID -> conversations
+//        let conversations: DatabaseReference = Database.database().reference().child("conversations")
+//        let conversation: DatabaseReference = conversations.childByAutoId()
+//        //let conversionID: String? = conversation.key
+//        conversation.setValue(
+//            [ "createdAt": Int(Date().timeIntervalSince1970) ]
+//        )
+//        conversation.observeSingleEvent(
+//            of: .childAdded,
+//            with: { snapshot in
+//                // Converstion ID.
+//                let conversionID: String = snapshot.key
+//                self.selectedChatRoom?.autoID.append(conversionID)
+//                // 2. UserA
+//                
+//                // 3. UserB
+//                
+//        }
+//        )
+//    }
+    
     func uploadMessage() {
         if let currentUserID = Auth.auth().currentUser?.uid {
             //            Database.database().reference().child("users").child(currentUserID).child("conversations").child(toID).observeSingleEvent(of: .value) { (snapshot) in
@@ -135,31 +159,32 @@ class ChatTableViewController: UIViewController, UITableViewDelegate, UITableVie
             //                Database.database().reference().child("users").child(currentUserID).child("conversations").child(toID).updateChildValues(data)
         }
     }
+    
+    func getChat() {
+        let chatRef = rootReference.child("Chat_ID")
+        //let key = chatRef.key
+        //print("chatREF", key)
+        chatRef.observe(.value) { (snapshot) in
+            if let rootDictionary  = snapshot.value as? [String : Any] {
+                for (key, value) in rootDictionary {
+                    let chatID = key
+                    if let value = rootDictionary[chatID] as? [String : Any] {
+                        if let location = value["location"] as? String {
+                            
+                        } else {
+                            print("ERROR location")
+                        }
+                    }
+                }
+                
+            }
+        }
+    }
     //Downloads messages
     func getConversations() {
-        let messagesRef = rootReference.child("conversations")
-        //let ref = FIRDatabase.database().reference().child("users").child(user.uid).childByAutoId()
-        //let autoid = ref.key //autoIDのID
-        //print("autoid",autoid)
+        let messagesRef = rootReference.child("conversations").child("conversationsID")
         messagesRef.observe(.value) { (snapshot) in
-            
             var masArray = [Message]()
-            //var id = snapshot.key //最外層
-            //            for conversionSnapshot in snapshot.children {
-            //                if let rootDictionary = snapshot.value as? [String : Any] {
-            //                    print("@@rootDictionary@@")
-            //                    print(rootDictionary)
-            //                    if let messages = rootDictionary as? [String : Any] {
-            //                       print("@@messages@@")
-            //                       print(messages)
-            //                    } else {
-            //                        print("error messages")
-            //                    }
-            //                } else {
-            //                    print("error rootdictionary")
-            //                }
-            //            }
-            
             if let dictionary: [String : Any] = snapshot.value as? [String : Any] {
                 // Key: String, Value: Any
                 for (key, value) in dictionary {
@@ -196,32 +221,7 @@ class ChatTableViewController: UIViewController, UITableViewDelegate, UITableVie
                         print("error messageData")
                     }
                 }
-                // Key: String
-                // Value: Dictionary<???, ???>
-                // Key: String, Value: Any
-                //                if let key = messagesRef.key as? String{
-                //                    print("@key@",key)
-                //                    if let content = snapshotValue["content"] as? String {
-                //                        //print("content",content)
-                //                        if let isRead = snapshotValue["isRead"] as? Bool {
-                //                            //print("isRead",isRead)
-                //                            if let timestamp = snapshotValue["timestamp"] as? Int {
-                //                                //print("timestamp",timestamp)
-                //                                let messages = Message.init(outContent: content, outTimestamp: timestamp, outIsRead: isRead, outOwner: .sender)
-                //                                self.messageArray.append(messages)
-                //                            } else {
-                //                                print("error timestamp")
-                //                            }
-                //                        } else {
-                //                            print("error isRead")
-                //                        }
-                //                    } else {
-                //                        print("error content")
-                //                    }
-                //                } else {
-                //                    print("error id")
-                //                }
-                
+
            }
             self.messageArray = masArray
             self.tableView.reloadData()

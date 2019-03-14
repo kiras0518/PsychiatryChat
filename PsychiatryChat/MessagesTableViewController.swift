@@ -28,7 +28,7 @@ class MessagesTableViewController: UITableViewController {
                     print("==credentials==", credentials)
                     if let name = credentials["name"] {
                         if let email = credentials["email"] {
-                            let userInfo = User.init(name: name, email: email, id: userID)
+                            let userInfo = User.init(name: name, email: email, id: userID, role: "Test")
                             self.userArray.append(userInfo)
                         }
                     }
@@ -64,11 +64,6 @@ class MessagesTableViewController: UITableViewController {
         self.didSelectIndexPath = indexPath
         let toID = self.userArray[indexPath.row].id
         selectConversations(toID: toID)
-        
-        
- 
-        
-        
         self.performSegue(withIdentifier: "goChat", sender: self)
         //performSegue(withIdentifier: "goToChatRoom", sender: chatRooms[indexPath.row])
     }
@@ -97,8 +92,7 @@ class MessagesTableViewController: UITableViewController {
                     let userRefB = Database.database().reference().child("users").child(toID).child("conversations")
                     userRefB.updateChildValues(["chatID": conversionID])
                     let selec = ConversationID.init(autoID: conversionID)
-                    self.selectedChat.append(selec)
-                    
+                    self.selectedChat.append(selec)                    
                 } else {
                     print("ERROR data")
                 }

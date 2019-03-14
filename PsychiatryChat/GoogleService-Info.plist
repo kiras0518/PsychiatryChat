@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>AD_UNIT_ID_FOR_BANNER_TEST</key>
+	<string>ca-app-pub-3940256099942544/2934735716</string>
+	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
+	<string>ca-app-pub-3940256099942544/4411468910</string>
+	<key>CLIENT_ID</key>
+	<string>522323114353-u01miqgjkjlt7h2np9m72el12f1jqbef.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.522323114353-u01miqgjkjlt7h2np9m72el12f1jqbef</string>
+	<key>API_KEY</key>
+	<string>AIzaSyD_W8Pwh2srZc8Z9ibwcBW9_w7YILU6ZZ0</string>
+	<key>GCM_SENDER_ID</key>
+	<string>522323114353</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.ameyo.PsychiatryChat</string>
+	<key>PROJECT_ID</key>
+	<string>psychiatrychatroom</string>
+	<key>STORAGE_BUCKET</key>
+	<string>psychiatrychatroom.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<true></true>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<false></false>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:522323114353:ios:9acd9ba6841f61a8</string>
+	<key>DATABASE_URL</key>
+	<string>https://psychiatrychatroom.firebaseio.com</string>
+</dict>
+</plist>

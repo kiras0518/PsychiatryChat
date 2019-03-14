@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7D27975D223A140D001E8FDF /* UserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D27975C223A140D001E8FDF /* UserProfileViewController.swift */; };
+		7D27975F223A3643001E8FDF /* PsychologistsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D27975E223A3643001E8FDF /* PsychologistsViewController.swift */; };
+		7D279761223A3AED001E8FDF /* PsychologistsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D279760223A3AED001E8FDF /* PsychologistsCell.swift */; };
+		7D279763223A4B54001E8FDF /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D279762223A4B54001E8FDF /* RegisterViewController.swift */; };
 		7DA49DCA222F8679002A3980 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DA49DC9222F8679002A3980 /* AppDelegate.swift */; };
 		7DA49DCC222F8679002A3980 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DA49DCB222F8679002A3980 /* LoginViewController.swift */; };
 		7DA49DCF222F8679002A3980 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7DA49DCD222F8679002A3980 /* Main.storyboard */; };
@@ -23,6 +27,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7D27975C223A140D001E8FDF /* UserProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileViewController.swift; sourceTree = "<group>"; };
+		7D27975E223A3643001E8FDF /* PsychologistsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PsychologistsViewController.swift; sourceTree = "<group>"; };
+		7D279760223A3AED001E8FDF /* PsychologistsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PsychologistsCell.swift; sourceTree = "<group>"; };
+		7D279762223A4B54001E8FDF /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		7DA49DC6222F8679002A3980 /* PsychiatryChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PsychiatryChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7DA49DC9222F8679002A3980 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7DA49DCB222F8679002A3980 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -86,13 +94,17 @@
 			children = (
 				7DA49DC9222F8679002A3980 /* AppDelegate.swift */,
 				7DA49DCB222F8679002A3980 /* LoginViewController.swift */,
+				7D279762223A4B54001E8FDF /* RegisterViewController.swift */,
+				7D27975E223A3643001E8FDF /* PsychologistsViewController.swift */,
 				7DA49DE7223009D6002A3980 /* MessagesTableViewController.swift */,
 				7DA49DEB22301D75002A3980 /* ChatTableViewController.swift */,
+				7D27975C223A140D001E8FDF /* UserProfileViewController.swift */,
 				7DA49DE922300A1A002A3980 /* MessagesCell.swift */,
 				7DA49DED2230FF47002A3980 /* ChatCell.swift */,
 				7DA49DE6222FFB04002A3980 /* Model */,
 				7DA49DD0222F867C002A3980 /* Assets.xcassets */,
 				7DA49DCD222F8679002A3980 /* Main.storyboard */,
+				7D279760223A3AED001E8FDF /* PsychologistsCell.swift */,
 				7DA49DD2222F867C002A3980 /* LaunchScreen.storyboard */,
 				7DA49DD5222F867C002A3980 /* Info.plist */,
 				7DA49DEF22310E66002A3980 /* GoogleService-Info.plist */,
@@ -262,13 +274,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7D27975F223A3643001E8FDF /* PsychologistsViewController.swift in Sources */,
 				7DA49DCC222F8679002A3980 /* LoginViewController.swift in Sources */,
 				7DA49DEE2230FF47002A3980 /* ChatCell.swift in Sources */,
+				7D279763223A4B54001E8FDF /* RegisterViewController.swift in Sources */,
 				7DA49DEA22300A1A002A3980 /* MessagesCell.swift in Sources */,
 				7DA49DE8223009D6002A3980 /* MessagesTableViewController.swift in Sources */,
 				7DA49DCA222F8679002A3980 /* AppDelegate.swift in Sources */,
 				7DA49DE5222FDF8F002A3980 /* Message.swift in Sources */,
 				7DA49DE1222FC1E0002A3980 /* User.swift in Sources */,
+				7D279761223A3AED001E8FDF /* PsychologistsCell.swift in Sources */,
+				7D27975D223A140D001E8FDF /* UserProfileViewController.swift in Sources */,
 				7DA49DEC22301D75002A3980 /* ChatTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

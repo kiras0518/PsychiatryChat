@@ -15,11 +15,20 @@ struct User {
     let name: String
     let email: String
     let id: String
-    var profilePic: UIImage
-    init(name: String, email: String, id: String, profilePic: UIImage) {
+    let role: String
+    //var profilePic: UIImage
+    init(name: String, email: String, id: String, role: String) {
         self.name = name
         self.email = email
         self.id = id
-        self.profilePic = profilePic
+        self.role = role
+//        //self.profilePic = profilePic
+    }
+}
+
+struct ConversationID {
+    var autoID: String
+    init(autoID: String) {
+        self.autoID = autoID
     }
 }
