@@ -15,14 +15,32 @@ struct User {
     let name: String
     let email: String
     let id: String
-    let role: String
     //var profilePic: UIImage
-    init(name: String, email: String, id: String, role: String) {
+    init(name: String, email: String, id: String) {
         self.name = name
         self.email = email
         self.id = id
-        self.role = role
 //        //self.profilePic = profilePic
+    }
+}
+
+struct Psychologist {
+    let name: String
+    let id: String
+    let education: String
+    let personalFee: Double
+    let coupleFee: Double
+    let certificate: Int
+    let introduction: String
+    //var profilePic: UIImage
+    init(name: String, id: String, education: String, introduction: String, certificate: Int, personalFee: Double, coupleFee: Double) {
+        self.name = name
+        self.id = id
+        self.education = education
+        self.introduction = introduction
+        self.certificate = certificate
+        self.personalFee = personalFee
+        self.coupleFee = coupleFee
     }
 }
 
