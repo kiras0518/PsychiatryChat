@@ -4,6 +4,7 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -52,7 +53,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6Wa-Ip-vZT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="656.79999999999995" y="111.99400299850076"/>
+            <point key="canvasLocation" x="537" y="112"/>
         </scene>
         <!--附近諮商所-->
         <scene sceneID="dNn-ry-Rwe">
@@ -79,7 +80,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9mP-lC-oqn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-756" y="946"/>
+            <point key="canvasLocation" x="-1079" y="937"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="F6I-zx-ZBa">
@@ -121,7 +122,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KMw-Fu-d1k" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1437.5999999999999" y="108.39580209895054"/>
+            <point key="canvasLocation" x="1366" y="112"/>
         </scene>
         <!--Psychologists View Controller-->
         <scene sceneID="knY-Pb-dQe">
@@ -139,7 +140,7 @@
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="PsychologistsCell" rowHeight="80" id="fSY-TZ-bMO" customClass="PsychologistsCell" customModule="PsychiatryChat" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="80"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="fSY-TZ-bMO" id="TTc-MI-EVR">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="fSY-TZ-bMO" id="TTc-MI-EVR">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="79.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
@@ -162,7 +163,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="學歷" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="80p-nh-5w4">
-                                                    <rect key="frame" x="86" y="42" width="140" height="21"/>
+                                                    <rect key="frame" x="86" y="42" width="140" height="20"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="140" id="Etf-sP-pJB"/>
                                                         <constraint firstAttribute="height" constant="20" id="Xf1-XP-vhG"/>
@@ -185,7 +186,6 @@
                                         <connections>
                                             <outlet property="educationLable" destination="80p-nh-5w4" id="uwV-OS-cKH"/>
                                             <outlet property="nameLabel" destination="N8z-gk-YVi" id="gcv-St-BlG"/>
-                                            <segue destination="fKk-eE-cPC" kind="show" id="Ws7-pv-S0H"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -201,6 +201,7 @@
                     <navigationItem key="navigationItem" id="o5M-60-whD"/>
                     <connections>
                         <outlet property="tableView" destination="pcL-Xo-Yek" id="hMu-df-b91"/>
+                        <segue destination="fKk-eE-cPC" kind="show" identifier="next" id="dqG-2q-sEb"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7Og-no-hJU" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -279,10 +280,10 @@
             </objects>
             <point key="canvasLocation" x="-3702" y="683"/>
         </scene>
-        <!--View Controller-->
+        <!--SelectRoleVC-->
         <scene sceneID="Y8e-LE-7in">
             <objects>
-                <viewController id="r4R-HD-gwf" sceneMemberID="viewController">
+                <viewController title="SelectRoleVC" id="r4R-HD-gwf" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="245-6O-1Ku">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -323,10 +324,10 @@
             </objects>
             <point key="canvasLocation" x="-3010" y="682"/>
         </scene>
-        <!--View Controller-->
+        <!--RegisterPsychologistVC-->
         <scene sceneID="CtF-gT-c6k">
             <objects>
-                <viewController id="UPS-gG-hrK" sceneMemberID="viewController">
+                <viewController title="RegisterPsychologistVC" id="UPS-gG-hrK" customClass="RegisterPsychologistViewController" customModule="PsychiatryChat" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="93c-He-1J4">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -334,6 +335,7 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="doctor" translatesAutoresizingMaskIntoConstraints="NO" id="tNb-ht-vgY">
                                 <rect key="frame" x="137" y="50" width="100" height="100"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </imageView>
                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Name" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6ob-zw-xUd">
                                 <rect key="frame" x="139" y="177" width="97" height="30"/>
@@ -347,7 +349,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="PeZ-E2-9H8">
                                 <rect key="frame" x="137" y="225" width="97" height="30"/>
@@ -370,20 +372,29 @@
                                 <state key="normal" title="Register">
                                     <color key="titleColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
+                                <connections>
+                                    <action selector="register:" destination="UPS-gG-hrK" eventType="touchUpInside" id="Udo-9c-bLj"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="0.76862745099999996" blue="0.031372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="Pt7-hm-f7X"/>
                     </view>
+                    <connections>
+                        <outlet property="registerEmail" destination="PeZ-E2-9H8" id="FN1-Uw-PLw"/>
+                        <outlet property="registerName" destination="6ob-zw-xUd" id="4BM-eC-6ci"/>
+                        <outlet property="registerPassword" destination="erA-wz-87A" id="56y-uJ-jpu"/>
+                        <outlet property="registercertificate" destination="aar-D0-Qnh" id="ls2-yA-Gfn"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Cq1-lw-4Cx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-2330.4000000000001" y="1022.3388305847077"/>
         </scene>
-        <!--Register View Controller-->
+        <!--RegisterUserVC-->
         <scene sceneID="8J4-bl-1xf">
             <objects>
-                <viewController id="0hH-PF-22V" customClass="RegisterViewController" customModule="PsychiatryChat" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="RegisterUserVC" id="0hH-PF-22V" customClass="RegisterViewController" customModule="PsychiatryChat" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="dgZ-Fx-k0n">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -515,7 +526,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vvt-xF-S8R" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1596" y="-555.47226386806597"/>
+            <point key="canvasLocation" x="2254" y="-622"/>
         </scene>
         <!--Chat Table View Controller-->
         <scene sceneID="gBv-CB-xRQ">
@@ -550,17 +561,26 @@
                                                         <constraint firstAttribute="width" constant="36" id="y57-yp-fZK"/>
                                                     </constraints>
                                                 </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IxM-mC-cMB">
+                                                    <rect key="frame" x="300" y="29.5" width="42" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstItem="IxM-mC-cMB" firstAttribute="centerY" secondItem="D7W-9p-88y" secondAttribute="centerY" id="65W-vH-ib0"/>
                                                 <constraint firstItem="W6X-cg-Mgb" firstAttribute="centerY" secondItem="D7W-9p-88y" secondAttribute="centerY" id="BBO-Hm-7Eh"/>
                                                 <constraint firstItem="11A-1d-Uiw" firstAttribute="centerY" secondItem="D7W-9p-88y" secondAttribute="centerY" id="bpJ-bx-tYC"/>
                                                 <constraint firstItem="W6X-cg-Mgb" firstAttribute="centerX" secondItem="D7W-9p-88y" secondAttribute="centerX" constant="3.5" id="utl-PA-aUV"/>
                                                 <constraint firstItem="11A-1d-Uiw" firstAttribute="leading" secondItem="D7W-9p-88y" secondAttribute="leadingMargin" constant="-1" id="x0W-ND-jBC"/>
+                                                <constraint firstItem="IxM-mC-cMB" firstAttribute="centerX" secondItem="D7W-9p-88y" secondAttribute="centerX" constant="133.5" id="y0q-wC-1T8"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.91937810180000001" green="0.28681766990000002" blue="0.30586051939999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <connections>
                                             <outlet property="message" destination="W6X-cg-Mgb" id="cyr-12-QGp"/>
+                                            <outlet property="test" destination="IxM-mC-cMB" id="tZc-g1-8JZ"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="receiverCell" rowHeight="80" id="cke-5u-YC7" userLabel="Receiver Cell" customClass="ReceiverCell" customModule="PsychiatryChat" customModuleProvider="target">
@@ -634,12 +654,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="m9j-Cy-Mjs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2468" y="-555.47226386806597"/>
+            <point key="canvasLocation" x="3126" y="-622"/>
         </scene>
-        <!--View Controller-->
+        <!--Psychologists Detail View Controller-->
         <scene sceneID="q92-HX-9zv">
             <objects>
-                <viewController id="fKk-eE-cPC" sceneMemberID="viewController">
+                <viewController id="fKk-eE-cPC" customClass="PsychologistsDetailViewController" customModule="PsychiatryChat" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="WtX-HZ-5oA">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -670,15 +690,8 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.23127140409999999" green="0.5" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="et0-td-qru">
-                                <rect key="frame" x="160" y="192" width="45" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="證號" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xv9-op-wLd">
-                                <rect key="frame" x="165" y="226" width="35" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="證號" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xv9-op-wLd">
+                                <rect key="frame" x="116" y="226" width="133" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
@@ -689,13 +702,16 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.95062547919999996" green="0.76535946129999999" blue="0.26650339369999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <state key="normal" title="聯絡我"/>
+                                <connections>
+                                    <action selector="next:" destination="fKk-eE-cPC" eventType="touchUpInside" id="fdg-Yo-LII"/>
+                                </connections>
                             </button>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pna-cy-HCu">
                                 <rect key="frame" x="20" y="309" width="155" height="80"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="fzb-po-jUV">
-                                        <rect key="frame" x="42.999999999999993" y="8" width="69.5" height="61.5"/>
+                                        <rect key="frame" x="43" y="8" width="69.5" height="61.5"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="個別諮商" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N7F-Hm-xAA">
@@ -749,14 +765,25 @@
                                 </subviews>
                                 <color key="backgroundColor" red="0.6588235294117647" green="0.84705882352941175" blue="0.72549019607843135" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="et0-td-qru">
+                                <rect key="frame" x="124" y="192" width="126" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="bIH-kC-Ffg"/>
                     </view>
+                    <connections>
+                        <outlet property="certificateLabel" destination="Xv9-op-wLd" id="irO-JJ-6jy"/>
+                        <outlet property="nameLabel" destination="et0-td-qru" id="h0r-c2-QnD"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="461-mC-fPa" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-128.80000000000001" y="-823.53823088455783"/>
+            <point key="canvasLocation" x="60" y="-824.43778110944538"/>
         </scene>
         <!--訊息-->
         <scene sceneID="mga-Yp-bip">
@@ -775,7 +802,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="24L-g8-lrw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="708" y="-554.57271364317842"/>
+            <point key="canvasLocation" x="1366" y="-621"/>
         </scene>
         <!--個人資料-->
         <scene sceneID="O9K-j0-UQa">
@@ -794,7 +821,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ejZ-fd-tu4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-231.19999999999999" y="111.99400299850076"/>
+            <point key="canvasLocation" x="-241" y="112"/>
         </scene>
         <!--找諮商師-->
         <scene sceneID="l1g-Np-hpC">
