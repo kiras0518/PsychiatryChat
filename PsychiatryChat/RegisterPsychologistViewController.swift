@@ -17,7 +17,7 @@ class RegisterPsychologistViewController: UIViewController {
     @IBOutlet weak var registercertificate: UITextField!
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        exitBarButton()
     }
     @IBAction func register(_ sender: Any) {
         registerUser()
@@ -56,6 +56,18 @@ class RegisterPsychologistViewController: UIViewController {
                 }
             })
         }
+    }
+    func exitBarButton() {
+        let cannel = UIButton(type: .system)
+        cannel.frame = CGRect(x: 30, y: 30, width: 30, height: 30)
+        cannel.tintColor = .lightGray
+        cannel.setImage(UIImage(named: "back"), for: .normal)
+        cannel.addTarget(self, action: #selector(LoginViewController.onClose)
+            , for: .touchUpInside)
+        self.view.addSubview(cannel)
+    }
+    @objc func onClose() {
+        self.dismiss(animated: true, completion: nil)
     }
 
 }
