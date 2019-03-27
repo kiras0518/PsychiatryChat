@@ -16,7 +16,7 @@ class RegisterViewController: UIViewController {
     @IBOutlet weak var registerPassword: UITextField!
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        exitBarButton()
     }
     @IBAction func register(_ sender: Any) {
         registerUser()
@@ -51,14 +51,18 @@ class RegisterViewController: UIViewController {
             })
         }
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func exitBarButton() {
+        let cannel = UIButton(type: .system)
+        cannel.frame = CGRect(x: 30, y: 30, width: 30, height: 30)
+        //cannel.tintColor = UIColor(red: 134, green: 193, blue: 102, alpha: 0)
+        cannel.tintColor = .lightGray
+        cannel.setImage(UIImage(named: "back"), for: .normal)
+        cannel.addTarget(self, action: #selector(LoginViewController.onClose)
+            , for: .touchUpInside)
+        self.view.addSubview(cannel)
     }
-    */
+    @objc func onClose() {
+        self.dismiss(animated: true, completion: nil)
+    }
 
 }
