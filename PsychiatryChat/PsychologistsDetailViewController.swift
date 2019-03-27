@@ -21,7 +21,7 @@ class PsychologistsDetailViewController: UIViewController {
     @IBAction func next(_ sender: UIButton) {
         selectConversations(toID: toUserID)
     }
-    
+
     func selectConversations(toID: String) {
         // 1. ChatID -> conversations
         let conversations: DatabaseReference = Database.database().reference().child("conversations")
@@ -35,34 +35,38 @@ class PsychologistsDetailViewController: UIViewController {
             if snapshot.exists() {
                 guard let data = snapshot.value as? [String: String] else { return }
                 guard let chatID = data["chatID"] as? String else { return }
+                print("snapshot.exists")
                 if let chatVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ChatVC") as? ChatTableViewController {
+                    chatVC.toUser = self.toUserID
+                    chatVC.chatKey.autoID = chatID
                 let navigationRootController = UINavigationController(rootViewController: chatVC)
-                    navigationRootController.navigationBar.barStyle = UIBarStyle.black
+                    navigationRootController.navigationBar.barTintColor = #colorLiteral(red: 0.6588235294, green: 0.8470588235, blue: 0.7254901961, alpha: 1)
                     self.present(navigationRootController, animated: true, completion: nil)
                 }
             } else {
-                conversation.updateChildValues([ "createdAt": Int(Date().timeIntervalSince1970)])
+                //沒有的話會產生新的
+                //conversation.updateChildValues([ "createdAt": Int(Date().timeIntervalSince1970)])
                     conversation.observeSingleEvent(
                         of: .value,
                             with: { snapshot in
                                 let userID = Auth.auth().currentUser?.uid
                                 let conversionID: String = snapshot.key
                                 print("==conversationID==",conversionID)
-                                //self.currentKey.append(conversionID)
-                                if let conversationData = snapshot.value as? [String: Any] {
-                                    let userRefHuman = Database.database().reference().child("users").child(userID!).child("conversations").child(toID)
-                                    userRefHuman.updateChildValues(["chatID": conversionID])
-                                    let userRefPsychologists = Database.database().reference().child("psychologists").child(toID).child("conversations").child(userID!)
-                                    userRefPsychologists.updateChildValues(["chatID": conversionID])
-                                } else {
-                                    print("ERROR data")
-                                }
+                                let userRefHuman = Database.database().reference().child("users").child(userID!).child("conversations").child(toID)
+                                userRefHuman.updateChildValues(["chatID": conversionID])
+                                let userRefPsychologists = Database.database().reference().child("psychologists").child(toID).child("conversations").child(userID!)
+                                userRefPsychologists.updateChildValues(["chatID": conversionID])
+                                
+                                
                                 if let chatVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ChatVC") as? ChatTableViewController {
                                     chatVC.toUser = self.toUserID
-                                    chatVC.converID.autoID = conversionID
+                                    chatVC.chatKey.autoID = conversionID
+                                    print("VCVCVC",chatVC.toUser,chatVC.chatKey.autoID)
                                     let navigationRootController = UINavigationController(rootViewController: chatVC)
-                                    navigationRootController.navigationBar.barStyle = UIBarStyle.black
+                                    navigationRootController.navigationBar.barTintColor = #colorLiteral(red: 0.6588235294, green: 0.8470588235, blue: 0.7254901961, alpha: 1)
                                     self.present(navigationRootController, animated: true, completion: nil)
+                                } else {
+                                    print("error chat VC")
                                 }
                     })
             }
