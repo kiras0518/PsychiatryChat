@@ -13,64 +13,60 @@ import FirebaseDatabase
 class ChatTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var inputTextField: UITextField!
     @IBOutlet weak var tableView: UITableView!
-    var messageArray: [Message] = []
+    //var messageArray: [Message] = []
+    var messageArray = [Message]()
+    var converID: ChatRoom = ChatRoom.init(autoID: "")
+    //var psychologist: Psychologist?
     //var selectedChatRoom: ChatRoom?
-    var toChatID =  [String]()
-    var toUser: User?
+    //var converIDS: String = ""
+    var toUser: String = ""
+    //var currentUser: User?
+    //用來接前面一個畫面傳過來的roomID
+    var chatKey: ChatRoom = ChatRoom.init(autoID: "")
+    //根參考點
+    let rootReference = Database.database().reference()
     @IBAction func sendMessage(_ sender: Any) {
         if let text = self.inputTextField.text {
-            if text.characters.count > 0 {
+            if text.count > 0 {
                 composeMessage()
                 self.inputTextField.text = ""
             }
         }
     }
-//    func exitButton() {
-//        print("EXIRRRRRR")
-//        let back = UIButton(type: .system)
-//        back.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
-//        back.tintColor = .white
-//        back.setImage(UIImage(named: "back"), for: .normal)
-//        back.addTarget(self, action: #selector(ChatTableViewController.onBack), for: .touchUpInside)
-//        self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: back)
-//    }
-//    
-//    @objc func onBack() {
-//        dismiss(animated: true, completion: nil)
-//    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.delegate = self
         self.tableView.dataSource = self
-        getConversations()
-        getChat()
-        
-        //exitButton()
-//        let seRef = Database.database().reference().child("conversations")
-//        seRef.observeSingleEvent(of: .value, with: { snapshot in
-//
-//            for item in snapshot.children {
-//                if let child = item as? DataSnapshot {
-//                    let info = child.value as? [String: Any] ?? [:]
-//                    print("infoID:", info)
-//                    print("childID:", child.key)
-//                    print("content:", info["content"])
-//                    print("isRead:", info["isRead"])
-//                    print("outTimestamp:", info["outTimestamp"])
-//                    //mess.append(info)
+        print("CTVC",toUser)
+        print("chatid",chatKey.autoID)
+//        if let currentUserID = Auth.auth().currentUser?.uid { Database.database().reference().child("users").child(currentUserID).child("conversations").observe(.childAdded, with: { (snapshot) in
+//            //let toUserID = snapshot.key
+//            //print("toUserID",toUserID)
+//            self.toUser = snapshot.key
+//            if let values = snapshot.value as? [String: String] {
+//                print("values",values)
+//                if let chatID = values["chatID"] as? String {
+//                    print("chatID",chatID)
+//                    //self.chatID.autoID.append(chatID)
+//                    self.chatKey.autoID.append(chatID)
 //                }
-//
 //            }
-//
 //        })
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
+//        }
+        getConversations()
+        exitBarButton()
 
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-         //self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
-    
+    func exitBarButton() {
+        let cannel = UIButton(type: .system)
+        cannel.setImage(UIImage(named: "close"), for: .normal)
+        cannel.addTarget(self, action: #selector(ChatTableViewController.onClose)
+            , for: .touchUpInside)
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: cannel)
+    }
+    @objc func onClose() {
+        self.dismiss(animated: true, completion: nil)
+    }
     // MARK: - Table view data source
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -79,11 +75,16 @@ class ChatTableViewController: UIViewController, UITableViewDelegate, UITableVie
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.messageArray.count
     }
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch self.messageArray[indexPath.row].owner {
         case .sender:
             if let cell = tableView.dequeueReusableCell(withIdentifier: "senderCell", for: indexPath) as? SenderCell {
                 cell.message.text = self.messageArray[indexPath.row].content
+                print("AAAAA",cell)
+                print("BBBBBBB",cell.message.text)
+                cell.test.text = "@@第 \(indexPath.row) 個Cell@@"
+                print("MEASSSSS",self.messageArray[indexPath.row].content)
                 return cell
             }
         case .receiver:
@@ -94,138 +95,114 @@ class ChatTableViewController: UIViewController, UITableViewDelegate, UITableVie
         }
         return UITableViewCell()
     }
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return true
-    }
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-    var selectChat: ConversationID?
-    
-    //根參考點
-    let rootReference = Database.database().reference()
+    //send Message
     func composeMessage() {
         if let currentUserID = Auth.auth().currentUser?.uid {
-            //創建訊息Ref
-            guard let selectChatID = self.selectChat?.autoID else { return }
-            let messagesRef: DatabaseReference = rootReference.child("conversations")
-            let singleMessageAutoRef = messagesRef.childByAutoId()
-            let singleMessageRef = singleMessageAutoRef.child("messages").childByAutoId()
-            //print("按下送出\(singleMessageAutoRef.key)")
-            //print("按下送出\(singleMessageRef.key)")
-            let postMessage = ["content": inputTextField.text!, "fromID": currentUserID, "isRead": false, "timestamp": Int(Date().timeIntervalSince1970)] as [String : Any]
-            //寫入到Firebase
-            singleMessageRef.updateChildValues(postMessage)
-        }
-    }
-//    func selectConversations() {
-//        //let chatroomID = Database.database().reference().child("Chat_ID")
-//        // 1. ChatID -> conversations
-//        let conversations: DatabaseReference = Database.database().reference().child("conversations")
-//        let conversation: DatabaseReference = conversations.childByAutoId()
-//        //let conversionID: String? = conversation.key
-//        conversation.setValue(
-//            [ "createdAt": Int(Date().timeIntervalSince1970) ]
-//        )
-//        conversation.observeSingleEvent(
-//            of: .childAdded,
-//            with: { snapshot in
-//                // Converstion ID.
-//                let conversionID: String = snapshot.key
-//                self.selectedChatRoom?.autoID.append(conversionID)
-//                // 2. UserA
-//                
-//                // 3. UserB
-//                
-//        }
-//        )
-//    }
-    
-    func uploadMessage() {
-        if let currentUserID = Auth.auth().currentUser?.uid {
-            //            Database.database().reference().child("users").child(currentUserID).child("conversations").child(toID).observeSingleEvent(of: .value) { (snapshot) in
-            //                print("=============")
-            //                print(snapshot)
-            //                if let data = snapshot.value as? [String : String] {
-            //                    let location = data["location"]
-            //                    print("@@data@@",data)
-            //                    //Database.database().reference().child("conversations").child(location!).childByAutoId().setValue()
-            //                }
-            //                Database.database().reference().child("users").child(currentUserID).child("conversations").child(toID).updateChildValues(data)
-        }
-    }
-    
-    func getChat() {
-        let chatRef = rootReference.child("Chat_ID")
-        //let key = chatRef.key
-        //print("chatREF", key)
-        chatRef.observe(.value) { (snapshot) in
-            if let rootDictionary  = snapshot.value as? [String : Any] {
-                for (key, value) in rootDictionary {
-                    let chatID = key
-                    if let value = rootDictionary[chatID] as? [String : Any] {
-                        if let location = value["location"] as? String {
-                            
-                        } else {
-                            print("ERROR location")
-                        }
-                    }
-                }
-                
-            }
+            //聊天室ID
+            //let selectChatID = converID.autoID
+            //print("composeMessage,selectChatID",selectChatID)
+            //創建Ref
+            let messagesRef = rootReference.child("conversations")
+            let singleMessageAutoRef = messagesRef.child(self.chatKey.autoID)
+            let singleMessageRef = singleMessageAutoRef.childByAutoId()
+            
+            print("按下送出\(singleMessageAutoRef.key)")
+            print("按下送出\(singleMessageRef.key)")
+            let postMessage = ["content": self.inputTextField.text!,
+                               "fromID": currentUserID,
+                               "isRead": false,
+                               "toID": self.toUser,
+                               "timestamp": Int(Date().timeIntervalSince1970)] as [String : Any]
+            print("postMessage",postMessage)
+            singleMessageRef.setValue(postMessage)
+//            messagesRef.observe(.value) { (snapsh) in
+//                let singleMessageAutoRef = messagesRef.child(self.chatKey.autoID)
+//                let singleMessageRef = singleMessageAutoRef.childByAutoId()
+//                print("按下送出\(singleMessageAutoRef.key)")
+//                print("按下送出\(singleMessageRef.key)")
+//
+//
+//
+//                let postMessage = ["content": self.inputTextField.text!,
+//                                   "fromID": currentUserID,
+//                                   "isRead": false,
+//                                   "toID": self.toUser,
+//                                   "timestamp": Int(Date().timeIntervalSince1970)] as [String : Any]
+//                print("postMessage",postMessage)
+//                //寫入到Firebase
+//  //              singleMessageRef.updateChildValues(postMessage)
+////                singleMessageRef.setValue(postMessage)
+////                print("singleMessageRef",singleMessageRef)
+//            }
         }
     }
     //Downloads messages
     func getConversations() {
-        let messagesRef = rootReference.child("conversations").child("conversationsID")
-        messagesRef.observe(.value) { (snapshot) in
-            var masArray = [Message]()
-            if let dictionary: [String : Any] = snapshot.value as? [String : Any] {
-                // Key: String, Value: Any
-                for (key, value) in dictionary {
-                    let conversionID: String = key
-                    //print("最外層ID",conversionID)
-                    if let messageData = dictionary[conversionID] as? [String : Any] {
-                        if let messages = messageData["messages"] as? [String : Any] {
-                            for (key, value) in messages {
-                                let messageID: String = key
-                                //print("messageID", key)
-                                if let messageValue = messages[messageID] as? [String : Any] {
-                                    if let content = messageValue["content"] as? String {
-                                        if let isRead = messageValue["isRead"] as? Bool {
-                                            if let timestamp = messageValue["timestamp"] as? Int {
-                                                let newMessages = Message.init(outContent: content, outTimestamp: timestamp, outIsRead: isRead, outOwner: .sender)
-                                                    masArray.append(newMessages)
-                                            } else {
-                                                print("error timestamp")
-                                            }
-                                        } else {
-                                            print("error isRead")
-                                        }
-                                    } else {
-                                        print("error content")
-                                    }
-                                } else {
-                                    print("error messageValue")
-                                }
-                            }
-                        } else {
-                            print("error messages")
-                        }
+        guard let currentUserID = Auth.auth().currentUser?.uid else { return }
+        let conversationsRef = rootReference.child("conversations")
+        //要到選擇的聊天室的節點
+        let singleChatIDRef = conversationsRef.child(self.chatKey.autoID)
+        //guard let selectedChatRoom = selectedChatRoom else { return }
+        print("@@singleMessageAutoRef@@2",singleChatIDRef)
+        
+        //conversationsRef.observe(.value) { (snapshot) in
+            //let selectChatID = self.converID.autoID
+            //print("snapshotmessagesRef",snapshot.value)
+            singleChatIDRef.observe(.value, with: { (snapshot) in
+            print("singleChatIDRef",snapshot)
+                self.messageArray = []
+                for eachMessage in snapshot.children {
+                    print("eachMessage",eachMessage)
+                    guard let childSnapshot = eachMessage as? DataSnapshot else { print("error childSnapshot"); return }
+                    print("childSnapshot", childSnapshot)
+                    print("childSnapshot.value",childSnapshot.value)
+                    
+                    guard let snapshotValue = childSnapshot.value as? [String: Any] else { print("ChatTableVC error snapshotValue"); return }
+                    print("snapshotValue",snapshotValue)
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    guard let content = snapshotValue["content"] as? String else { print("error content"); return }
+                    guard let timestamp = snapshotValue["timestamp"] as? Int else { print("error timestamp"); return }
+                    guard let isRead = snapshotValue["isRead"] as? Bool else { print("error isRead"); return }
+                    guard let fromID = snapshotValue["fromID"] as? String else { print("error fromID"); return }
+                    
+                    if fromID == currentUserID {
+                    let newMessages = Message.init(outContent: content, outTimestamp: timestamp, outIsRead: true, outOwner: .receiver)
+                        self.messageArray.append(newMessages)
+                        print("messageArray receiver",self.messageArray)
                     } else {
-                        print("error messageData")
+                        let newMessages = Message.init(outContent: content, outTimestamp: timestamp, outIsRead: true, outOwner: .sender)
+                        self.messageArray.append(newMessages)
+                        print("messageArray sender",self.messageArray)
                     }
                 }
-
-           }
-            self.messageArray = masArray
-            self.tableView.reloadData()
-        }
+                self.tableView.reloadData()
+////                guard let dictionary: [String : Any] = snapshot.value as? [String : Any] else { print("dictionary error");return }
+////                print("CTVCdictionary",dictionary)
+////                guard let content = dictionary["content"] as? String else { print("error content"); return }
+////                guard let timestamp = dictionary["timestamp"] as? Int else { print("error timestamp"); return }
+////                guard let isRead = dictionary["isRead"] as? Bool else { print("error isRead"); return }
+////                guard let fromID = dictionary["fromID"] as? String else { print("error fromID"); return }
+////                if fromID == currentUserID {
+////                    let newMessages = Message.init(outContent: content, outTimestamp: timestamp, outIsRead: true, outOwner: .receiver)
+////                    self.messageArray = [newMessages]
+////                } else {
+////                    let newMessages = Message.init(outContent: content, outTimestamp: timestamp, outIsRead: true, outOwner: .sender)
+////                    self.messageArray.append(newMessages)
+////                }
+//                DispatchQueue.main.async {
+//                    self.tableView.reloadData()
+//                }
+            })
+        //}
     }
-
 }
