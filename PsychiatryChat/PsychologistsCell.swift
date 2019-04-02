@@ -11,7 +11,6 @@ import UIKit
 class PsychologistsCell: UITableViewCell {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var educationLable: UILabel!
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

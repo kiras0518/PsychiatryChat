@@ -9,12 +9,11 @@
 import Foundation
 import UIKit
 import Firebase
-import FirebaseDatabase
 
 struct User {
-    let name: String
-    let email: String
-    let id: String
+    var name: String
+    var email: String
+    var id: String
     //var profilePic: UIImage
     init(name: String, email: String, id: String) {
         self.name = name
@@ -25,15 +24,17 @@ struct User {
 }
 
 struct Psychologist {
-    let name: String
+    var name: String
     let id: String
-    let education: String
-    let personalFee: Double
-    let coupleFee: Double
-    let certificate: Int
-    let introduction: String
+    var education: String?
+    var personalFee: String?
+    var coupleFee: String?
+    var certificate: String
+    var introduction: String?
+    var expertise: String?
+    var position: String?
     //var profilePic: UIImage
-    init(name: String, id: String, education: String, introduction: String, certificate: Int, personalFee: Double, coupleFee: Double) {
+    init(name: String, id: String, certificate: String, education: String, introduction: String, personalFee: String, coupleFee: String, expertise: String, position: String) {
         self.name = name
         self.id = id
         self.education = education
@@ -41,12 +42,32 @@ struct Psychologist {
         self.certificate = certificate
         self.personalFee = personalFee
         self.coupleFee = coupleFee
+        self.expertise = expertise
+        self.position = position
     }
 }
 
-struct ConversationID {
-    var autoID: String
-    init(autoID: String) {
-        self.autoID = autoID
+struct Person {
+    var name: String
+    let id: String
+    let conversationsID: String
+    init(name: String, id: String, conversationsID: String) {
+        self.name = name
+        self.id = id
+        self.conversationsID = conversationsID
     }
 }
+
+//struct UserInfo {
+////    var name: String?
+//      let id: String?
+//
+//    let user: Person
+//    var lastMessage: Message
+//
+//    init(user: Person, lastMessage: Message, id: String) {
+//        self.user = user
+//        self.lastMessage = lastMessage
+//        self.id = id
+//    }
+//}

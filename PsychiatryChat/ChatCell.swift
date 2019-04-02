@@ -6,11 +6,11 @@
 //  Copyright © 2019 ameyo. All rights reserved.
 //
 
-import Foundation
 import UIKit
 
 class SenderCell: UITableViewCell {
     @IBOutlet weak var message: UILabel!
+    @IBOutlet weak var test: UILabel!
 }
 
 class ReceiverCell: UITableViewCell {
