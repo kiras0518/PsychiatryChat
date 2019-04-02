@@ -14,7 +14,8 @@ class RegisterPsychologistViewController: UIViewController {
     @IBOutlet weak var registerName: UITextField!
     @IBOutlet weak var registerEmail: UITextField!
     @IBOutlet weak var registerPassword: UITextField!
-    @IBOutlet weak var registercertificate: UITextField!
+    @IBOutlet weak var registerCertificate: UITextField!
+    @IBOutlet weak var registerEduction: UITextField!
     override func viewDidLoad() {
         super.viewDidLoad()
         exitBarButton()
@@ -26,13 +27,18 @@ class RegisterPsychologistViewController: UIViewController {
         guard let registerName = self.registerName.text else { return }
         guard let registerEmail = self.registerEmail.text else { return }
         guard let registerPassword = self.registerPassword.text else { return }
-        guard let registercertificate = self.registercertificate.text else { return }
+        guard let registerCertificate = self.registerCertificate.text else { return }
+        guard let registerEduction = self.registerEduction.text else { return }
         if registerName.isEmpty {
             let alert = UIAlertController(title: "Sign In Failed", message: "請輸入完整資訊", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK", style: .default))
             self.present(alert, animated: true, completion: nil)
-        } else if registercertificate.isEmpty || registercertificate.count > 6 || registercertificate.count < 6 {
+        } else if registerCertificate.isEmpty || registerCertificate.count > 6 || registerCertificate.count < 6 {
             let alert = UIAlertController(title: "Sign In Failed", message: "請輸入正確證字書號", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default))
+            self.present(alert, animated: true, completion: nil)
+        } else if registerEduction.isEmpty {
+            let alert = UIAlertController(title: "Sign In Failed", message: "請輸入您的最高學位", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK", style: .default))
             self.present(alert, animated: true, completion: nil)
         } else {
@@ -41,8 +47,9 @@ class RegisterPsychologistViewController: UIViewController {
             Auth.auth().createUser(withEmail: registerEmail, password: registerPassword, completion: { (user, error) in
                 if error == nil {
                     let userID = Auth.auth().currentUser!.uid
-                    let userData = ["name": registerName, "email": registerEmail, "certificate": registercertificate]
+                    let userData = ["name": registerName, "email": registerEmail, "certificate": registerCertificate, "education": registerEduction]
                     userRef.child(userID).child("credentials").setValue(userData)
+                    userRef.child(userID).updateChildValues(["role": "psy"])
                     print("Sucess createUser")
                     let tabBarVC = self.storyboard?.instantiateViewController(withIdentifier: "segueToTabBarController")
                     self.present(tabBarVC!, animated: true, completion: nil)

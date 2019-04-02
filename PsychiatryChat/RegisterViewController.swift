@@ -37,6 +37,7 @@ class RegisterViewController: UIViewController {
                     let userID = Auth.auth().currentUser!.uid
                     let userData = ["name": registerName, "email": registerEmail]
                     userRef.child(userID).child("credentials").setValue(userData)
+                    userRef.child(userID).updateChildValues(["role": "patient"])
                     print("Sucess createUser")
                     let tabBarVC = self.storyboard?.instantiateViewController(withIdentifier: "segueToTabBarController")
                     self.present(tabBarVC!, animated: true, completion: nil)
