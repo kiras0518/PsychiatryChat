@@ -51,6 +51,7 @@ struct Person {
     var name: String
     let id: String
     let conversationsID: String
+    //var lastMessage: Message
     init(name: String, id: String, conversationsID: String) {
         self.name = name
         self.id = id
@@ -58,16 +59,16 @@ struct Person {
     }
 }
 
-//struct UserInfo {
-////    var name: String?
-//      let id: String?
-//
-//    let user: Person
-//    var lastMessage: Message
-//
-//    init(user: Person, lastMessage: Message, id: String) {
-//        self.user = user
-//        self.lastMessage = lastMessage
-//        self.id = id
-//    }
-//}
+struct UserInfo {
+    let user: Person
+    var lastMessage: Message
+    
+//    let emptyMessage = Message.init(outContent: "A", outTimestamp: 1111, outIsRead: false, outOwner: .sender, id: "erf31g14f14342")
+//    let conversation = UserInfo.init(user: user, lastMessage: emptyMessage)
+    //conversations.append(conversation)
+    
+    init(user: Person, lastMessage: Message) {
+        self.user = user
+        self.lastMessage = lastMessage
+    }
+}

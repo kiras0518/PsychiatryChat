@@ -29,6 +29,7 @@
 		7DA49DF022310E66002A3980 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7DA49DEF22310E66002A3980 /* GoogleService-Info.plist */; };
 		7DCC14FB2244A2680082C44F /* EditUserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DCC14FA2244A2670082C44F /* EditUserProfileViewController.swift */; };
 		7DCC14FD2244C84E0082C44F /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DCC14FC2244C84E0082C44F /* MapViewController.swift */; };
+		7DE7A5A32254F8C300EE0CF3 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DE7A5A22254F8C300EE0CF3 /* WebViewController.swift */; };
 		A78E9DC4C5B1384FD67D2429 /* Pods_PsychiatryChat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C4864D4E18A07D034AC3417 /* Pods_PsychiatryChat.framework */; };
 /* End PBXBuildFile section */
 
@@ -57,6 +58,7 @@
 		7DA49DEF22310E66002A3980 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		7DCC14FA2244A2670082C44F /* EditUserProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditUserProfileViewController.swift; sourceTree = "<group>"; };
 		7DCC14FC2244C84E0082C44F /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		7DE7A5A22254F8C300EE0CF3 /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		92B2DD2E561C9CF0B687B765 /* Pods-PsychiatryChat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PsychiatryChat.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PsychiatryChat/Pods-PsychiatryChat.debug.xcconfig"; sourceTree = "<group>"; };
 		9C4864D4E18A07D034AC3417 /* Pods_PsychiatryChat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PsychiatryChat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BD09FC5F02CDCF56B43CCD27 /* Pods-PsychiatryChat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PsychiatryChat.release.xcconfig"; path = "Pods/Target Support Files/Pods-PsychiatryChat/Pods-PsychiatryChat.release.xcconfig"; sourceTree = "<group>"; };
@@ -123,6 +125,7 @@
 				7DA49DE6222FFB04002A3980 /* Model */,
 				7DA49DD0222F867C002A3980 /* Assets.xcassets */,
 				7DA49DCD222F8679002A3980 /* Main.storyboard */,
+				7DE7A5A22254F8C300EE0CF3 /* WebViewController.swift */,
 				7DA49DD2222F867C002A3980 /* LaunchScreen.storyboard */,
 				7DA49DD5222F867C002A3980 /* Info.plist */,
 				7DA49DEF22310E66002A3980 /* GoogleService-Info.plist */,
@@ -160,6 +163,7 @@
 				7DA49DC3222F8679002A3980 /* Frameworks */,
 				7DA49DC4222F8679002A3980 /* Resources */,
 				F79CF4DD8C1B5EBE46A05B63 /* [CP] Embed Pods Frameworks */,
+				7DE7A5A122536FAC00EE0CF3 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -262,6 +266,23 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
 		};
+		7DE7A5A122536FAC00EE0CF3 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Fabric/run\"\n";
+		};
 		F79CF4DD8C1B5EBE46A05B63 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -299,6 +320,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7DE7A5A32254F8C300EE0CF3 /* WebViewController.swift in Sources */,
 				7D27975F223A3643001E8FDF /* PsychologistsViewController.swift in Sources */,
 				7DA49DCC222F8679002A3980 /* LoginViewController.swift in Sources */,
 				7DA49DEE2230FF47002A3980 /* ChatCell.swift in Sources */,
@@ -376,7 +398,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -393,7 +415,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -448,7 +470,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -463,16 +485,18 @@
 			baseConfigurationReference = 92B2DD2E561C9CF0B687B765 /* Pods-PsychiatryChat.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = WG57F49J5K;
+				DEVELOPMENT_TEAM = 8G52W4UACZ;
 				INFOPLIST_FILE = PsychiatryChat/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.ameyo.PsychiatryChat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -483,16 +507,18 @@
 			baseConfigurationReference = BD09FC5F02CDCF56B43CCD27 /* Pods-PsychiatryChat.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = WG57F49J5K;
+				DEVELOPMENT_TEAM = 8G52W4UACZ;
 				INFOPLIST_FILE = PsychiatryChat/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.ameyo.PsychiatryChat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 1;
 			};

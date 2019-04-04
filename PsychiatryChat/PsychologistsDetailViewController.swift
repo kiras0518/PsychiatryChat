@@ -10,7 +10,6 @@ import UIKit
 import Firebase
 
 class PsychologistsDetailViewController: UIViewController {
-    //var chatID = ChatRoom.init(autoID: "")
     var toUserID: String = ""
 //    var userArray = [Psychologist]()
 //    var userArrays: [Psychologist] = []
@@ -30,22 +29,16 @@ class PsychologistsDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         if let psychologist = self.psychologist {
-//            nameLabel.text = psychologist.name
-//            certificateLabel.text = psychologist.certificate
-//            personalFee.text = psychologist.personalFee
-//            coupleFee.text = psychologist.coupleFee
-//            education.text = psychologist.education
-//            expertise.text = psychologist.expertise
-//            introduction.text = psychologist.introduction
             toUserID = psychologist.id
             //print("toUserIDviewDidLoad",toUserID)
         }
-         getInfo()
+        getInfo()
     }
 }
 
 extension PsychologistsDetailViewController {
-    func getInfo(){
+
+    func getInfo() {
         let psychologistsRef: DatabaseReference = Database.database().reference().child("psychologists").child(toUserID).child("credentials")
         psychologistsRef.observe(.value, with: { (snapshot) in
             guard let dictionary = snapshot.value as? [String: Any] else { return }
@@ -78,30 +71,28 @@ extension PsychologistsDetailViewController {
         guard let currentUserID = Auth.auth().currentUser?.uid else { print("currentID nil"); return }
         //找尋使用者底下聊天室ID 當沒有的時候去產生
         Database.database().reference().child("users").child(currentUserID).child("conversations").child(toID).observeSingleEvent(of: .value, with: { (snapshot) in
-            print("USERS",snapshot)
+            //print("USERS",snapshot)
             if snapshot.exists() {
                 guard let data = snapshot.value as? [String: String] else { return }
-                guard let chatID = data["chatID"] as? String else { return }
-                print("snapshot.exists")
-                print("==chatID==",chatID)
+                guard let chatID = data["chatID"] else { return }
+//                print("snapshot.exists")
+//                print("==chatID==",chatID)
                 if let chatVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ChatVC") as? ChatTableViewController {
                     chatVC.toUser = self.toUserID
                     chatVC.chatKey.autoID = chatID
-                    //                let navigationRootController = UINavigationController(rootViewController: chatVC)
-                    //                     navigationRootController.navigationBar.barTintColor = #colorLiteral(red: 0.6588235294, green: 0.8470588235, blue: 0.7254901961, alpha: 1)
-                    //                    self.present(navigationRootController, animated: true, completion: nil)
-                    //self.present(chatVC, animated: true, completion: nil)
+                    //let navigationRootController = UINavigationController(rootViewController: chatVC)
+                    //navigationRootController.navigationBar.barTintColor = #colorLiteral(red: 0.6588235294, green: 0.8470588235, blue: 0.7254901961, alpha: 1)
+                    //self.present(navigationRootController, animated: true, completion: nil)
                     self.navigationController?.pushViewController(chatVC, animated: true)
                 }
             } else {
-                //沒有的話會產生新的
-                //conversation.updateChildValues([ "createdAt": Int(Date().timeIntervalSince1970)])
+                //沒有的話會產生新的聊天室
                 conversation.observeSingleEvent(
                     of: .value,
                     with: { snapshot in
                         guard let userID = Auth.auth().currentUser?.uid else { return }
                         let chatID: String = snapshot.key
-                        print("==chatID==",chatID)
+                        //print("==chatID==",chatID)
                         let userRefHuman = Database.database().reference().child("users").child(userID).child("conversations").child(toID)
                         userRefHuman.updateChildValues(["chatID": chatID])
                         let userRefPsychologists = Database.database().reference().child("psychologists").child(toID).child("conversations").child(userID)
@@ -109,12 +100,8 @@ extension PsychologistsDetailViewController {
                         if let chatVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ChatVC") as? ChatTableViewController {
                             chatVC.toUser = self.toUserID
                             chatVC.chatKey.autoID = chatID
-                            print("VCVCVC",chatVC.toUser,chatVC.chatKey.autoID)
-                            //                                    let navigationRootController = UINavigationController(rootViewController: chatVC)
-                            //                                    navigationRootController.navigationBar.barTintColor = #colorLiteral(red: 0.6588235294, green: 0.8470588235, blue: 0.7254901961, alpha: 1)
-                            //                                    self.present(navigationRootController, animated: true, completion: nil)
+                            //print("VCVCVC",chatVC.toUser,chatVC.chatKey.autoID)
                             self.navigationController?.pushViewController(chatVC, animated: true)
-                            //self.present(chatVC, animated: true, completion: nil)
                         } else {
                             print("error chat VC")
                         }

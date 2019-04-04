@@ -75,7 +75,8 @@ class ChatTableViewController: UIViewController, UITextFieldDelegate {
             let messagesRef = rootReference.child("conversations")
             let usersRef = rootReference.child("users")
             let psychologistRef = rootReference.child("psychologists")
-            let postMessage = ["content": self.inputTextField.text,
+            guard let inputTextField = self.inputTextField.text else { return }
+            let postMessage = ["content": inputTextField,
                            "fromID": currentUserID,
                            "isRead": false,
                            "toID": self.toUser,

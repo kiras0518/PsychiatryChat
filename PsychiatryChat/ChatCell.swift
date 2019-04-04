@@ -10,10 +10,8 @@ import UIKit
 
 class SenderCell: UITableViewCell {
     @IBOutlet weak var message: UILabel!
-    @IBOutlet weak var test: UILabel!
 }
 
 class ReceiverCell: UITableViewCell {
     @IBOutlet weak var message: UILabel!
-    @IBOutlet weak var messageBackground: UIImageView!
 }

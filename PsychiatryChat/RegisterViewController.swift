@@ -21,6 +21,7 @@ class RegisterViewController: UIViewController {
     @IBAction func register(_ sender: Any) {
         registerUser()
     }
+
     func registerUser() {
         guard let registerName = self.registerName.text else { return }
         guard let registerEmail = self.registerEmail.text else { return }
@@ -52,18 +53,18 @@ class RegisterViewController: UIViewController {
             })
         }
     }
+
     func exitBarButton() {
         let cannel = UIButton(type: .system)
         cannel.frame = CGRect(x: 30, y: 30, width: 30, height: 30)
-        //cannel.tintColor = UIColor(red: 134, green: 193, blue: 102, alpha: 0)
         cannel.tintColor = .lightGray
         cannel.setImage(UIImage(named: "back"), for: .normal)
         cannel.addTarget(self, action: #selector(LoginViewController.onClose)
             , for: .touchUpInside)
         self.view.addSubview(cannel)
     }
+
     @objc func onClose() {
         self.dismiss(animated: true, completion: nil)
     }
-
 }

@@ -9,6 +9,7 @@
 import UIKit
 import Firebase
 class PsychologistsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+
     @IBOutlet weak var tableView: UITableView!
     var didSelectIndexPath: IndexPath = []
     var userArray = [Psychologist]()
@@ -26,6 +27,7 @@ class PsychologistsViewController: UIViewController, UITableViewDelegate, UITabl
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.userArray.count
     }
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "PsychologistsCell", for: indexPath) as? PsychologistsCell {
             cell.nameLabel.text = userArray[indexPath.row].name
@@ -34,11 +36,13 @@ class PsychologistsViewController: UIViewController, UITableViewDelegate, UITabl
         }
         return UITableViewCell()
     }
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("PsyVC 你選擇了 \(indexPath.row)")
         self.didSelectIndexPath = indexPath
         self.performSegue(withIdentifier: "next", sender: self)
     }
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "next" {
             if let detailController = segue.destination as? PsychologistsDetailViewController {
