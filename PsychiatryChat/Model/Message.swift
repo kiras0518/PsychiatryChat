@@ -9,14 +9,35 @@
 import Foundation
 import UIKit
 import Firebase
+import MapKit
 
 struct Message {
-    
     var content: String
     var timestamp: Int
-    var image: UIImage
+    //var image: UIImage
     var isRead: Bool
-    var toID: String
-    var fromID: String
-    
+    var fromID: String?
+    var toID: String?
+    var id: String?
+    var owner: MessageOwner
+    init(outContent: String, outTimestamp: Int, outIsRead: Bool, outOwner: MessageOwner, id: String) {
+        self.content = outContent
+        self.timestamp = outTimestamp
+        self.isRead = outIsRead
+        self.owner = outOwner
+        self.id = id
+        //self.toName = toName
+    }
+}
+
+struct ChatRoom {
+    var autoID: String
+    init(autoID: String) {
+        self.autoID = autoID
+    }
+}
+
+enum MessageOwner {
+        case sender
+        case receiver
 }

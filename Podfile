@@ -9,4 +9,8 @@ target 'PsychiatryChat' do
     pod 'SwiftLint'
     pod 'Firebase/Core'
     pod 'Firebase/Auth'
+    pod 'Firebase/Database'
+    pod 'IQKeyboardManagerSwift'
+    pod 'Fabric', '~> 1.9.0'
+    pod 'Crashlytics', '~> 3.12.0'
 end

@@ -8,15 +8,19 @@
 
 import UIKit
 import Firebase
+import FirebaseDatabase
+import IQKeyboardManagerSwift
+import Crashlytics
+import Fabric
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
     var window: UIWindow?
-
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         FirebaseApp.configure()
+        IQKeyboardManager.shared.enable = true
+        Fabric.sharedSDK().debug = true
         return true
     }
 
@@ -42,6 +46,4 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 
-
 }
-
