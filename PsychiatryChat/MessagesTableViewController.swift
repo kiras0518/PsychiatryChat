@@ -13,120 +13,162 @@ import Crashlytics
 
 class MessagesTableViewController: UITableViewController {
     var didSelectIndexPath: IndexPath = []
-    var selectedUser: User?
+    var selectedUser: Person?
+//    var conversations = [Conversation]() {
+//        didSet {
+//            print("Conversationss \n", conversations, conversations.count)
+//        }
+//    }
+    var toUser = [String]()
     var chatID = Array<ChatRoom>()//ChatRoom.init(autoID: "")
-    var lastMessage = [Message]()
-    var toUser: String = ""
-    var psychologistCredentials = [Psychologist]()
-    var usersCredentials = [User]()
-    var personArray = [Person]()
-    var asdf = [UserInfo]()
+//    var lastMessage = [Message]() {
+//        didSet {
+//            print("LastMessage \n", lastMessage, lastMessage.count)
+//        }
+//    }
+    var personArray = [Person]() {
+        didSet {
+            print("PersonArray \n", personArray, personArray.count)
+        }
+    }
+
+//    private var currentUserID: String {
+//        return Auth.auth().currentUser?.uid ?? ""
+//    }
     //var toUser1 = Array<Person>()
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("viewDidLoad")
-        //getPsychologistsInfo()
-        //getUsersInfo()
+        //observeUserMessages()
+        //observerPsyMessages()
         //downloadLastMessage()
-        observeUserMessages()
-        //downloadLastMessage()
+//        observeUserMessages { (status) in
+//            if status {
+//                self.rootReference.child("psychologists").child(self.toUser).child("credentials").observeSingleEvent(of: .value, with: { (snapshot) in
+//                                        print("psychologists INFO",snapshot)
+//                                        if let data = snapshot.value as? [String: Any] {
+//                                            guard let name = data["name"] as? String else { return }
+//                                            guard let email = data["email"] as? String else { return }
+//                                            let psychologists = Person.init(name: name, id: self.toUser, conversationsID: self.chatkey)
+//                                            self.personArray.append(psychologists)
+//
+//                                        } else { print("Error psychologists data") }
+//                                        DispatchQueue.main.async {
+//                                            self.tableView.reloadData()
+//                                        }
+//                                    })
+//            } else {
+//                print("VVVVVVVVVVVVVV")
+//            }
+//        }
+//
+//        observerPsychologists { (status: Bool) in
+//            if status {
+//
+//            } else {
+//
+//            }
+//        }
     }
 
-//    override func viewWillDisappear(_ animated: Bool) {
-//        super.viewWillDisappear(animated)
-//        print("viewWillDisappear")
-//        self.rootReference.removeAllObservers()
-//    }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        print("viewWillDisappear")
+        //self.rootReference.removeAllObservers()
+    }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         print("viewWillAppear")
-        downloadLastMessage()
+        observeUserMessages()
+        observerPsyMessages()
     }
 
     let rootReference = Database.database().reference()
 
     func observeUserMessages() {
+        print("observeUserMessages")
         guard let currentUserID = Auth.auth().currentUser?.uid else { return }
-        
-    rootReference.child("users").child(currentUserID).child("conversations").observe(.childAdded) { (snapshot) in
+        let chatRoomsReference = rootReference.child("conversations")
+        rootReference.child("users").child(currentUserID).child("conversations").observe(.childAdded) { (snapshot) in
             let toPsychologistID = snapshot.key
-            self.toUser = toPsychologistID
+            //print("toPsychologistID",toPsychologistID)
+            //self.toUser = [toPsychologistID]
+            self.toUser.append(toPsychologistID)
             guard let data = snapshot.value as? [String: Any] else { return }
-            guard let chatID = data["chatID"] as? String else { return }
-            //print("getPsychologistsInfo 下",chatID)
+            guard let chatID = data["chatID"] as? String else { return  }
+            //print("datadatadatadatadata",data)
+            guard let lastTime = data["timestamp"] as? Int else { return }
+            guard let lastContent = data["content"] as? String else { return }
+            //print("getSsersInfo 下",chatID)
             let chatRoom = ChatRoom.init(autoID: chatID)
             self.chatID.append(chatRoom)
-
             if currentUserID != toPsychologistID {
-                print("111111")
-                self.rootReference.child("psychologists").child(toPsychologistID).child("credentials").observeSingleEvent(of: .value, with: { (snapshot) in
-                    print("psychologists INFO",snapshot)
+            self.personArray = [Person]()
+                self.rootReference.child("psychologists").child(toPsychologistID).child("credentials").observe(.value, with: { (snapshot) in
+                    //print("psychologists INFO",snapshot)
                     if let data = snapshot.value as? [String: Any] {
                         guard let name = data["name"] as? String else { return }
-                        guard let email = data["email"] as? String else { return }
-                        let psychologists = Person.init(name: name, id: toPsychologistID, conversationsID: chatID)
+                        let psychologists = Person.init(name: name, id: toPsychologistID, conversationsID: chatID, lastTime: lastTime, lastContent: lastContent)
                         self.personArray.append(psychologists)
+                        DispatchQueue.main.async {
+                            self.tableView.reloadData()
+                        }
                     } else { print("Error psychologists data") }
-                    DispatchQueue.main.async {
-                        self.tableView.reloadData()
-                    }
                 })
-            } else {
-                print("23333")
-            }
-        }
-
-        rootReference.child("psychologists").child(currentUserID).child("conversations").observe(.childAdded) { (snapshot) in
-            let toUserID = snapshot.key
-            self.toUser = toUserID
-            guard let data = snapshot.value as? [String: Any] else { return }
-            guard let chatID = data["chatID"] as? String else { return }
-            print("getUsersInfo 下",chatID)
-            let chatRoom = ChatRoom.init(autoID: chatID)
-            self.chatID.append(chatRoom)
-            if currentUserID != toUserID {
-                print("333333")
-                self.rootReference.child("users").child(toUserID).child("credentials").observeSingleEvent(of: .value, with: { (snapshot) in
-                    print("users INFO",snapshot)
-                    if let data = snapshot.value as? [String: Any] {
-                        guard let name = data["name"] as? String else { return }
-                        guard let email = data["email"] as? String else { return }
-                        let users = Person.init(name: name, id: toUserID, conversationsID: chatID)
-                        self.personArray.append(users)
-                    } else { print("error users data") }
-                    DispatchQueue.main.async {
-                        self.tableView.reloadData()
-                    }
-                })
-            } else {
-                print("444444")
+                //downloadLastMessage
+//                let request = chatRoomsReference.child(chatID).queryOrdered(byChild: "timestamp")
+//                request.queryLimited(toLast: 1).observe(.childAdded, with: { (snapshot) in
+//                    //print("queryLimited", snapshot.value)
+//                    guard let data = snapshot.value as? [String: Any] else { print("lastMessage error data");return}
+//                    guard let timestamp = data["timestamp"] as? Int else { print("lastMessag error timestamp"); return }
+//                    guard let content = data["content"] as? String else { print("lastMessage error content"); return }
+//                    let emptyMessage = Message.init(outContent: content, outTimestamp: timestamp, outIsRead: false, outOwner: .sender, id: chatID)
+//                    self.lastMessage.append(emptyMessage)
+//                    self.tableView.reloadData()
+//                })
             }
         }
     }
 
-    func downloadLastMessage() {
+    func observerPsyMessages() {
+        print("observerPsyMessages")
+        guard let currentUserID = Auth.auth().currentUser?.uid else { return }
         let chatRoomsReference = rootReference.child("conversations")
-        chatRoomsReference.observeSingleEvent(of: .childAdded) { (snap) in
-            let chatID = snap.key
+        rootReference.child("psychologists").child(currentUserID).child("conversations").observe(.childAdded) { (snapshot) in
+            //print("snapshotsnapshot",snapshot)
+            let toUsersID = snapshot.key
+            self.toUser.append(toUsersID)
+            guard let data = snapshot.value as? [String: Any] else { return }
+            guard let chatID = data["chatID"] as? String else { return  }
+            guard let lastTime = data["timestamp"] as? Int else { return }
+            guard let lastContent = data["content"] as? String else { return }
             let chatRoom = ChatRoom.init(autoID: chatID)
             self.chatID.append(chatRoom)
-             //chatID
-            let request = chatRoomsReference.child(chatID).queryOrdered(byChild: "timestamp")
-            request.queryLimited(toLast: 1).observe(.value, with: { (snapshot) in
-                for snap in snapshot.children {
-                    guard let childSnapshot = snap as? DataSnapshot else { print("error childSnapshot"); return }
-                    guard let values = childSnapshot.value as? [String: Any] else { print("error values"); return }
-                    guard let timestamp = values["timestamp"] as? Int else { print("error timestamp"); return }
-                    guard let content = values["content"] as? String else { return }
-                    let emptyMessage = Message.init(outContent: content, outTimestamp: timestamp, outIsRead: false, outOwner: .sender, id: chatID)
-                    print("MESSSSSSSSS")
-                    self.lastMessage.append(emptyMessage)
-                }
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
-                }
-            })
+            if currentUserID != toUsersID {
+                self.personArray = [Person]()
+                self.rootReference.child("users").child(toUsersID).child("credentials").observe(.value, with: { (snapshot) in
+                    //print("User INFO",snapshot)
+                    if let data = snapshot.value as? [String: Any] {
+                        guard let name = data["name"] as? String else { return }
+                        let users = Person.init(name: name, id: toUsersID, conversationsID: chatID, lastTime: lastTime, lastContent: lastContent)
+                        self.personArray.append(users)
+                        DispatchQueue.main.async {
+                            self.tableView.reloadData()
+                        }
+                    } else { print("Error users data") }
+                })
+                //downloadLastMessage
+                //                let request = chatRoomsReference.child(chatID).queryOrdered(byChild: "timestamp")
+                //                request.queryLimited(toLast: 1).observe(.childAdded, with: { (snapshot) in
+                //                    //print("queryLimited", snapshot.value)
+                //                    guard let data = snapshot.value as? [String: Any] else { print("lastMessage error data");return}
+                //                    guard let timestamp = data["timestamp"] as? Int else { print("lastMessag error timestamp"); return }
+                //                    guard let content = data["content"] as? String else { print("lastMessage error content"); return }
+                //                    let emptyMessage = Message.init(outContent: content, outTimestamp: timestamp, outIsRead: false, outOwner: .sender, id: chatID)
+                //                    self.lastMessage.append(emptyMessage)
+                //                    self.tableView.reloadData()
+                //                })
+            }
         }
     }
 }
@@ -139,24 +181,23 @@ extension MessagesTableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.personArray.count
-        //return self.psychologistCredentials.count
-        //return self.usersCredentials.count
         //return self.lastMessage.count
+        //return conversations.count
+        //return chatID.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "MessageCell", for: indexPath) as? MessageCell {
-            print("GGGGGGGGGGGGGGGGGGGGGG")
             cell.nameLabel.text = self.personArray[indexPath.row].name
+            cell.messageLabel.text = self.personArray[indexPath.row].lastContent
             //時間格式轉換
-            //print("TIMETIMETIMETIMETIMETIMETIMETIME")
-            //let messageDate = Date.init(timeIntervalSince1970: TimeInterval(self.lastMessage[indexPath.row].timestamp))
-//            print("messageDate",messageDate)
-//            let dataformatter = DateFormatter.init()
-//            dataformatter.timeStyle = .short
-//            let date = dataformatter.string(from: messageDate)
-//            cell.timeLabel.text = date
-//            cell.messageLabel.text = self.lastMessage[indexPath.row].content
+            let messageDate = Date.init(timeIntervalSince1970: TimeInterval(self.personArray[indexPath.row].lastTime))
+            let dataformatter = DateFormatter.init()
+            dataformatter.timeStyle = .short
+            let date = dataformatter.string(from: messageDate)
+            cell.timeLabel.text = date
+            //cell.messageLabel.text = self.lastMessage[indexPath.row].content
+            //cell.messageLabel.text = self.conversations[indexPath.row].lastMessage.content
             return cell
         }
         return UITableViewCell()
@@ -172,22 +213,74 @@ extension MessagesTableViewController {
         //let indexPath2 = tableView.indexPathForSelectedRow
         //print("indexPath2",indexPath2)
         self.didSelectIndexPath = indexPath
-//        print("你選擇了",self.chatID[indexPath.row].autoID)
-//        print("你選擇了1",self.chatID[indexPath.row])
         if let chatVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ChatVC") as? ChatTableViewController {
-            print("MessNextChatVC")
-            //print("你選擇了toUser=",toUser)
-            print("你選擇了chatID[indexPath.row].autoID=",chatID[indexPath.row].autoID)
-            print("你選擇了personArray[indexPath.row].id=",self.personArray[indexPath.row].id)
-            //chatVC.toUser = self.toUser
-            print("SELF",self.toUser)
-            chatVC.toUser = self.personArray[indexPath.row].id
+            print("didSelectRowAt-NextChatVC")
+            chatVC.toUser = self.toUser[indexPath.row]
             chatVC.chatKey.autoID = self.chatID[indexPath.row].autoID
-            chatVC.currentUser = self.personArray[indexPath.row].name
-//                            let navigationRootController = UINavigationController(rootViewController: chatVC)
-//                            navigationRootController.navigationBar.barTintColor = #colorLiteral(red: 0.6588235294, green: 0.8470588235, blue: 0.7254901961, alpha: 1)
-//                            self.present(navigationRootController, animated: true, completion: nil)
+            chatVC.userTitle = self.personArray[indexPath.row].name
             self.navigationController?.pushViewController(chatVC, animated: true)
         }
     }
 }
+
+//抓取最後時間和訊息想丟在cell上
+//    func downloadLastMessage() {
+//        let chatRoomsReference = rootReference.child("conversations")
+//        chatRoomsReference.observeSingleEvent(of: .childAdded) { (snap) in
+//            let chatID = snap.key
+//            let chatRoom = ChatRoom.init(autoID: chatID)
+//            self.chatID.append(chatRoom)
+//             //chatID
+//            let request = chatRoomsReference.child(chatID).queryOrdered(byChild: "timestamp")
+//            request.queryLimited(toLast: 1).observe(.value, with: { (snapshot) in
+//                for snap in snapshot.children {
+//                    guard let childSnapshot = snap as? DataSnapshot else { print("error childSnapshot"); return }
+//                    guard let values = childSnapshot.value as? [String: Any] else { print("error values"); return }
+//                    guard let timestamp = values["timestamp"] as? Int else { print("error timestamp"); return }
+//                    guard let content = values["content"] as? String else { return }
+//                    let emptyMessage = Message.init(outContent: content, outTimestamp: timestamp, outIsRead: false, outOwner: .sender, id: chatID)
+//                    //print("MESSSSSSSSS")
+//                    self.lastMessage.append(emptyMessage)
+//                }
+//                DispatchQueue.main.async {
+//                    self.tableView.reloadData()
+//                }
+//            })
+//        }
+//    }
+
+
+
+
+
+
+
+//                    for snap in snapshot.children {
+//                        guard let childSnapshot = snap as? DataSnapshot else { print("error childSnapshot"); return }
+//                        guard let values = childSnapshot.value as? [String: Any] else { print("error values"); return }
+//                        guard let timestamp = values["timestamp"] as? Int else { print("error timestamp"); return }
+//                        guard let content = values["content"] as? String else { print("error content"); return }
+//                        let emptyMessage = Message.init(outContent: content, outTimestamp: timestamp, outIsRead: false, outOwner: .sender, id: chatID)
+//                        self.lastMessage.append(emptyMessage)
+
+
+//
+//                        //                        if self.personArray.count == self.lastMessage.count {
+//                        //                            DispatchQueue.main.async {
+//                        //                                self.tableView.reloadData()
+//                        //                            }
+//                        //                        } else {
+//                        //                            print("Nooooooooo!!!")
+//                        //                        }
+//                        //                        for personIfno in self.personArray {
+//                        //                            print("person",personIfno)
+//                        //                             let showConversations = Conversation.init(user: personIfno, lastMessage: emptyMessage)
+//                        //                            self.conversations.append(showConversations)
+//                        //
+//                        //                        }
+//                        //
+//                        //                        DispatchQueue.main.async {
+//                        //                            self.tableView.reloadData()
+//                        //                        }
+//
+//                    }
