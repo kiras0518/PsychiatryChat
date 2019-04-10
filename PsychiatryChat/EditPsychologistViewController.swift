@@ -20,6 +20,9 @@ class EditPsychologistViewController: UIViewController, UITextFieldDelegate, UIT
     @IBAction func saveButton(_ sender: UIButton) {
         editInfo()
     }
+    @IBAction func closeButton(_ sender: UIButton) {
+        self.dismiss(animated: true, completion: nil)
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         guard let currentUserID = Auth.auth().currentUser?.uid else { return }
@@ -42,7 +45,7 @@ class EditPsychologistViewController: UIViewController, UITextFieldDelegate, UIT
         self.education.delegate = self
         self.position.delegate = self
         self.coupleFee.delegate = self
-        self.coupleFee.delegate = self
+        self.personalFee.delegate = self
         self.expertise.delegate = self
         self.introduction.delegate = self
     }

@@ -16,6 +16,9 @@ class EditUserProfileViewController: UIViewController, UITextFieldDelegate {
     @IBAction func save(_ sender: UIButton) {
         editInfo()
     }
+    @IBAction func closeButton(_ sender: UIButton) {
+        self.dismiss(animated: true, completion: nil)
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         guard let currentUserID = Auth.auth().currentUser?.uid else { return }
