@@ -16,10 +16,21 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var loginPasswordField: UITextField!
     override func viewDidLoad() {
         super.viewDidLoad()
+        stateDidChangeListener()
         exitBarButton()
     }
 
     override func viewDidAppear(_ animated: Bool) {
+    }
+    @IBAction func login(_ sender: Any) {
+        loginUser()
+    }
+
+    @IBAction func forgotPasswordTapped(_ sender: Any) {
+        forgetPasswordWithEmail()
+    }
+
+    func stateDidChangeListener() {
         Auth.auth().addStateDidChangeListener { auth, user in
             if user != nil {
                 print("User is signed in. Show home screen")
@@ -32,18 +43,12 @@ class LoginViewController: UIViewController {
             }
         }
     }
-    @IBAction func login(_ sender: Any) {
-        loginUser()
-    }
-
-    @IBAction func forgotPasswordTapped(_ sender: Any) {
-        forgetPasswordWithEmail()
-    }
 
     func loginUser() {
         guard let email = self.loginEmailField.text else { print("mail error"); return }
         guard let password = self.loginPasswordField.text else { print("password error"); return }
-        Auth.auth().signIn(withEmail: email, password: password, completion: { (user , error) in
+        self.showHUD(progressLabel: "Loading...")
+        Auth.auth().signIn(withEmail: email, password: password, completion: { (user, error) in
             if error == nil {
                 print("successfully logged in")
                 let tabBarVC = self.storyboard?.instantiateViewController(withIdentifier: "segueToTabBarController")
@@ -53,11 +58,11 @@ class LoginViewController: UIViewController {
                 alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
                 self.present(alert, animated: true, completion: nil)
             }
-        })
-        self.showHUD(progressLabel: "Loading...")
-        DispatchQueue.main.async {
             self.dismissHUD(isAnimated: true)
-        }
+        })
+//        DispatchQueue.main.async {
+//            self.dismissHUD(isAnimated: true)
+//        }
     }
 
     func forgetPasswordWithEmail() {
@@ -86,7 +91,7 @@ class LoginViewController: UIViewController {
         }))
         self.present(forgotPasswordAlert, animated: true, completion: nil)
     }
-    
+
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
@@ -101,8 +106,7 @@ class LoginViewController: UIViewController {
         cannel.frame = CGRect(x: 30, y: 30, width: 30, height: 30)
         cannel.tintColor = .lightGray
         cannel.setImage(UIImage(named: "back"), for: .normal)
-        cannel.addTarget(self, action: #selector(LoginViewController.onClose)
-            , for: .touchUpInside)
+        cannel.addTarget(self, action: #selector(LoginViewController.onClose), for: .touchUpInside)
         self.view.addSubview(cannel)
     }
 
