@@ -18,7 +18,9 @@ class ChatTableViewController: UIViewController, UITextFieldDelegate {
     //var messageArray: [Message] = []
     var messageArray = [Message]()
     var toUser: String = ""
-    var currentUser: String = ""
+    var userTitle: String = ""
+    var patient = "patient"
+    var psychologists = "psy"
     //用來接前面一個畫面傳過來的roomID
     var chatKey: ChatRoom = ChatRoom.init(autoID: "")
     //根參考點
@@ -36,10 +38,10 @@ class ChatTableViewController: UIViewController, UITextFieldDelegate {
         self.tableView.delegate = self
         self.tableView.dataSource = self
         self.inputTextField.delegate = self
-        print("CTVCtoUser",toUser)
-        print("CTVCtoChatID",chatKey.autoID)
-        print("CTVCtoName",currentUser)
-        self.navigationItem.title = self.currentUser
+
+        let textAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+        navigationController?.navigationBar.titleTextAttributes = textAttributes
+        self.navigationItem.title = self.userTitle
         getConversations()
         exitBarButton()
     }
@@ -65,35 +67,48 @@ class ChatTableViewController: UIViewController, UITextFieldDelegate {
 
     @objc func onClose() {
         self.navigationController?.popViewController(animated: true)
-         //self.dismiss(animated: true, completion: nil)
+        print("onCloseonClose")
+        //self.dismiss(animated: true, completion: nil)
     }
 
     //send Message
     func composeMessage() {
         guard let currentUserID = Auth.auth().currentUser?.uid else { return }
             //創建Ref
-            let messagesRef = rootReference.child("conversations")
-            let usersRef = rootReference.child("users")
-            let psychologistRef = rootReference.child("psychologists")
+            let messagesRef = rootReference.child("conversations").child(chatKey.autoID).childByAutoId()
             guard let inputTextField = self.inputTextField.text else { return }
             let postMessage = ["content": inputTextField,
                            "fromID": currentUserID,
                            "isRead": false,
                            "toID": self.toUser,
-                           "timestamp": Int(Date().timeIntervalSince1970)] as [String : Any]
-        //先去user底下的查看是否有chitID,確定有chatID 後再新增 message
-        usersRef.child(currentUserID).child("conversations").child(toUser).observeSingleEvent(of: .value, with: { (snapshot) in
-            //print("users",snapshot,snapshot.key)
-                guard let data = snapshot.value as? [String: Any] else { return }
-                guard let chatID = data["chatID"] as? String else { return }
-                //print("users 底下",chatID)
-                messagesRef.child(chatID).childByAutoId().setValue(postMessage)
-            })
-        psychologistRef.child(currentUserID).child("conversations").child(toUser).observeSingleEvent(of: .value, with: { (snapshot) in
-                guard let data = snapshot.value as? [String: Any] else { return }
-                guard let chatID = data["chatID"] as? String else { return }
-                messagesRef.child(chatID).childByAutoId().setValue(postMessage)
-        })
+                           "timestamp": Int(Date().timeIntervalSince1970)] as [String: Any]
+            let lastMessage = ["content": inputTextField,
+                               "timestamp": Int(Date().timeIntervalSince1970)] as [String: Any]
+        let psyRef = rootReference.child("psychologists").child(currentUserID)
+        let usersRef = rootReference.child("users").child(currentUserID)
+        psyRef.observeSingleEvent(of: .value) { (snap) in
+            guard let data = snap.value as? [String: Any] else { return}
+            guard let role = data["role"] as? String else { print("error jobs"); return}
+
+            if role == self.psychologists {
+                messagesRef.setValue(postMessage)
+                let savePsyRef = psyRef.child("conversations").child(self.toUser)
+                let psytoUsers = self.rootReference.child("users").child(self.toUser).child("conversations").child(currentUserID)
+                savePsyRef.updateChildValues(lastMessage)
+                psytoUsers.updateChildValues(lastMessage)
+            }
+        }
+        usersRef.observeSingleEvent(of: .value) { (snap) in
+            guard let data = snap.value as? [String: Any] else { return}
+            guard let role = data["role"] as? String else { print("error jobs"); return}
+            if role == self.patient {
+                messagesRef.setValue(postMessage)
+                let saveUsersRef = usersRef.child("conversations").child(self.toUser)
+                let userToPsy = self.rootReference.child("psychologists").child(self.toUser).child("conversations").child(currentUserID)
+                saveUsersRef.updateChildValues(lastMessage)
+                userToPsy.updateChildValues(lastMessage)
+            }
+        }
     }
     //Downloads messages
     func getConversations() {
@@ -101,10 +116,8 @@ class ChatTableViewController: UIViewController, UITextFieldDelegate {
         let conversationsRef = rootReference.child("conversations")
         print("getConversations test")
         conversationsRef.child(chatKey.autoID).observe(.childAdded) { (snapshot) in
-            //print("value",snapshot.value)
             let chatID = self.chatKey.autoID
             guard let data = snapshot.value as? [String: Any] else { return }
-            //print("DDDDDDD",data)
             guard let content = data["content"] as? String else { return }
             guard let timestamp = data["timestamp"] as? Int else { return }
             guard let isRead = data["isRead"] as? Bool else { print("error isRead"); return }
@@ -116,8 +129,11 @@ class ChatTableViewController: UIViewController, UITextFieldDelegate {
                 let newMessages = Message.init(outContent: content, outTimestamp: timestamp, outIsRead: true, outOwner: .sender, id: chatID)
                     self.messageArray.append(newMessages)
             }
-            self.tableView.reloadData()
-            self.scrollToBottom()
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+                self.scrollToBottom()
+            }
+
         }
     }
 }
@@ -141,9 +157,9 @@ extension ChatTableViewController {
         return true
     }
 
-    func scrollToBottom(){
+    func scrollToBottom() {
         DispatchQueue.main.async {
-            let indexPath = IndexPath(row: self.messageArray.count-1, section: 0)
+            let indexPath = IndexPath(row: self.messageArray.count - 1, section: 0)
             self.tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
         }
     }
