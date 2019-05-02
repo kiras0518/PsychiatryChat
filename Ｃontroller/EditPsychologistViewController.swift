@@ -86,6 +86,8 @@ class EditPsychologistViewController: UIViewController, UITextFieldDelegate, UIT
     override func viewDidLoad() {
 
         super.viewDidLoad()
+        
+        psyImageView.clipsToBounds = true
 
         fetchImage()
 
@@ -205,15 +207,10 @@ class EditPsychologistViewController: UIViewController, UITextFieldDelegate, UIT
                         self.dismissHUD(isAnimated: true)
                     }
                 }
-
             })
             task.resume()
         }
-
     }
-
-  
-
 }
 
 extension EditPsychologistViewController {
