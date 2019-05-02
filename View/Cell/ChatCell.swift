@@ -12,6 +12,6 @@ class SenderCell: UITableViewCell {
     @IBOutlet weak var message: UILabel!
 }
 
-class ReceiverCell: UITableViewCell {
-    @IBOutlet weak var message: UILabel!
+class ReceiverCell: UITableViewCell, UITextViewDelegate {
+    @IBOutlet weak var message: UITextView!
 }
